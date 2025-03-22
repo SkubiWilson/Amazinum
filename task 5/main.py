@@ -50,12 +50,32 @@ class KNNModel:
 
 # 1. Iris Dataset
 np.random.seed(2021)
+
 iris = load_iris()
 X, y = iris.data, iris.target
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
 knn_classifier = KNNModel(model_type="classifier")
 knn_classifier.fit_best_model(X_train, y_train, X_test, y_test)
+
+best_iris = None
+best_sc_rs = 0
+
+print("ir | Accuracy")
+print("--|---------")
+
+for k in range(1, knn_classifier.max_k + 1):
+    model = KNeighborsClassifier(n_neighbors=k)
+    model.fit(X_train, y_train)
+
+    score = model.score(X_test, y_test)
+    print(f"{k} | {score:.3f}")
+
+    if score > best_sc_rs:
+        best_iris, best_sc_rs = k, score
+
+print(f"\nBest iris: {best_iris}, Iris score: {best_sc_rs:.3f}")
+
 
 
 np.random.seed(2021)
