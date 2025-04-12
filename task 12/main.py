@@ -49,8 +49,17 @@ pca = PCA(n_components=2)
 reduced = pca.fit_transform(normal_dt)
 data['PCA1'] = reduced[:, 0]
 data['PCA2'] = reduced[:, 1]
-fig = px.scatter(data, x="PCA1", y="PCA2", color="Cluster", symbol="Species")
-fig.show()
+
+
+plt.figure(figsize=(10, 6))
+sns.scatterplot(data=data, x='PCA1', y='PCA2', hue='Cluster', style='Species', palette='Set2', s=70)
+plt.title("Кластери KMeans та справжні види (PCA)")
+plt.xlabel("PCA1")
+plt.ylabel("PCA2")
+plt.legend(title="Кластер / Вид")
+plt.grid(True)
+plt.show()
+
 
 score = silhouette_score(normal_dt, clusters)
 print(f"Score: {score:.3f}")
