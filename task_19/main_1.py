@@ -31,18 +31,30 @@ mean_light = light.mean()
 mean_dark = dark.mean()
 
 
-print("T-statistic:", t_stat)
-print("P-value:", p_value)
-print("Mean Engagement Rate (Light):", mean_light)
-print("Mean Engagement Rate (Dark):", mean_dark)
+print("Перевірка статистичної гіпотези щодо впливу теми інтерфейсу на Engagement Rate\n")
 
+print("Формулювання гіпотез:")
+print("Нульова гіпотеза (H₀): Середній Engagement Rate однаковий для користувачів з темною і світлою темою.")
+print("Альтернативна гіпотеза (H₁): Середній Engagement Rate відрізняється між користувачами з темною і світлою темою.\n")
+
+print("Результати t-тесту:")
+print(f"T-статистика: {t_stat:.4f}")
+print(f"P-значення: {p_value:.4f}")
+print(f"Середній Engagement Rate (Light): {mean_light:.4f}")
+print(f"Середній Engagement Rate (Dark): {mean_dark:.4f}\n")
 
 alpha = 0.05
+print(f"Рівень значущості (α): {alpha}")
 if p_value < alpha:
-    print("Відкидаємо нульову гіпотезу: є статистично значуща різниця.")
+    print("Висновок: P-значення < α → Відкидаємо нульову гіпотезу.")
+    print("Є статистично значуща різниця між Engagement Rate у темній та світлій темах.")
 else:
-    print("Немає підстав відкидати нульову гіпотезу: різниця незначуща.")
+    print("ℹВисновок: P-значення ≥ α → Немає підстав відкидати нульову гіпотезу.")
+    print("Статистично значущої різниці між Engagement Rate не виявлено.")
+
+
 
 sns.boxplot(data=df, x='Theme', y='Engagement rate')
 plt.title("Engagement Rate by Theme")
 plt.show()
+

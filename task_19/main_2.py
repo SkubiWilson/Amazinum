@@ -1,6 +1,7 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
+import sweetviz as sv
 
 df = pd.read_csv('insurance.csv')
 
@@ -34,6 +35,11 @@ def detect_outliers_iqr(data, column):
     upper_bound = Q3 + 1.5 * IQR
     outliers = data[(data[column] < lower_bound) | (data[column] > upper_bound)]
     return outliers
+
+
+report = sv.analyze(df)
+report.show_html("sweetviz_report.html")
+print("Звіт sweetviz збережено як sweetviz_report.html")
 
 charges_outliers = detect_outliers_iqr(df, 'charges')
 print(f"Found {len(charges_outliers)} outliers in 'charges'")
